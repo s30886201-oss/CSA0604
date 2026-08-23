@@ -1,0 +1,29 @@
+def subset_sum(numbers, target):
+    n = len(numbers)
+
+    # dp[i][sum] = True if sum can be formed using first i numbers
+    dp = [[False] * (target + 1) for _ in range(n + 1)]
+
+    for i in range(n + 1):
+        dp[i][0] = True
+
+    for i in range(1, n + 1):
+        for current_sum in range(1, target + 1):
+            dp[i][current_sum] = dp[i - 1][current_sum]
+
+            if numbers[i - 1] <= current_sum:
+                dp[i][current_sum] |= dp[i - 1][current_sum - numbers[i - 1]]
+
+    return dp[n][target]
+
+
+numbers = [3, 34, 4, 12, 5, 2]
+target = 9
+
+if subset_sum(numbers, target):
+    print("Subset with the given sum exists")
+else:
+    print("No subset found")
+
+out put:
+Subset with the given sum exists
