@@ -1,0 +1,18 @@
+def quick_sort(numbers):
+    if len(numbers) <= 1:
+        return numbers
+
+    pivot = numbers[len(numbers) // 2]
+
+    smaller = [x for x in numbers if x < pivot]
+    equal = [x for x in numbers if x == pivot]
+    larger = [x for x in numbers if x > pivot]
+
+    return quick_sort(smaller) + equal + quick_sort(larger)
+
+
+values = [10, 7, 8, 9, 1, 5]
+print(quick_sort(values))
+
+OUT PUT:
+[1, 5, 7, 8, 9, 10]
