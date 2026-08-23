@@ -1,0 +1,31 @@
+def kth_smallest(arr, k):
+    # k starts from 1
+    if len(arr) <= 5:
+        return sorted(arr)[k - 1]
+
+    # Split into groups of 5 and find each group's median
+    groups = [arr[i:i + 5] for i in range(0, len(arr), 5)]
+    medians = [sorted(group)[len(group) // 2] for group in groups]
+
+    # Median of Medians pivot
+    pivot = kth_smallest(medians, (len(medians) + 1) // 2)
+
+    smaller = [x for x in arr if x < pivot]
+    equal = [x for x in arr if x == pivot]
+    larger = [x for x in arr if x > pivot]
+
+    if k <= len(smaller):
+        return kth_smallest(smaller, k)
+    elif k <= len(smaller) + len(equal):
+        return pivot
+    else:
+        return kth_smallest(larger, k - len(smaller) - len(equal))
+
+
+numbers = [12, 3, 5, 7, 4, 19, 26]
+k = 3
+
+print("Kth smallest element:", kth_smallest(numbers, k))
+
+OUT PUT:
+Kth smallest element: 5
