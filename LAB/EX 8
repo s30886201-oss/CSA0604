@@ -1,0 +1,28 @@
+def karatsuba(x, y):
+    # Base case
+    if x < 10 or y < 10:
+        return x * y
+
+    n = max(len(str(x)), len(str(y)))
+    half = n // 2
+    power = 10 ** half
+
+    # Split each number
+    high_x, low_x = divmod(x, power)
+    high_y, low_y = divmod(y, power)
+
+    # Three recursive multiplications
+    z0 = karatsuba(low_x, low_y)
+    z2 = karatsuba(high_x, high_y)
+    z1 = karatsuba(low_x + high_x, low_y + high_y) - z0 - z2
+
+    return z2 * (10 ** (2 * half)) + z1 * power + z0
+
+
+x = 1234
+y = 5678
+
+print(karatsuba(x, y))
+
+OUT PUT:
+7006652
